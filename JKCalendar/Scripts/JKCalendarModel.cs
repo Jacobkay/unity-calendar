@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ZCalendarModel : MonoBehaviour
+public class JKCalendarModel : MonoBehaviour
 {
     [Header("根据当前时间自动初始化")]
     public bool awake2Init = true;
@@ -32,11 +32,11 @@ public class ZCalendarModel : MonoBehaviour
     public Text txtYear;
     public Text txtMonth;
     public Transform dayContent;
-    public ZCalendarDayItem dayItem;
+    public JKCalendarDayItem dayItem;
     [HideInInspector]
     public Button btnClose;
     [HideInInspector]
-    public ZCalendarController zCalendarController;
+    public JKCalendarController JKCalendarController;
     /// <summary>
     /// 初始化
     /// </summary>
@@ -45,7 +45,7 @@ public class ZCalendarModel : MonoBehaviour
         if (!bak.activeInHierarchy)
         {
             bak.SetActive(true);
-            this.GetComponent<ZCalendar>().Hide();
+            this.GetComponent<JKCalendar>().Hide();
         }
         if (autoSetItemSize)
         {
@@ -67,7 +67,7 @@ public class ZCalendarModel : MonoBehaviour
     /// 生成一个日期对象
     /// </summary>
     /// <returns></returns>
-    public ZCalendarDayItem Instantiate()
+    public JKCalendarDayItem Instantiate()
     {
         return Instantiate(dayItem, dayContent);
     }

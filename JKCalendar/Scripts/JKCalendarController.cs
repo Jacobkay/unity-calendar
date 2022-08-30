@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ZCalendarController
+public class JKCalendarController
 {
     public int Year { set; get; }
     public int Month { set; get; }
@@ -25,8 +25,8 @@ public class ZCalendarController
     public Vector3 pos;
     private int lastMonthDays;
     private int nextMonthDays;
-    public ZCalendar zCalendar;
-    public ZCalendarModel zCalendarModel;
+    public JKCalendar jkCalendar;
+    public JKCalendarModel jkCalendarModel;
     public DateTime nowTime = DateTime.Now;
     private int lastMonthEmptyDays;
     bool isShow = true;
@@ -55,21 +55,21 @@ public class ZCalendarController
     /// <param name="date"></param>
     public void Init()
     {
-        zCalendarModel.zCalendarController = this;
-        zCalendarModel.Init();
-        if (zCalendarModel.isStaticCalendar) return;
+        jkCalendarModel.JKCalendarController = this;
+        jkCalendarModel.Init();
+        if (jkCalendarModel.isStaticCalendar) return;
         // 动态日历，可关闭
-        if (zCalendarModel.isPopupCalendar)
+        if (jkCalendarModel.isPopupCalendar)
         {
-            zCalendarModel.btnClose.onClick.AddListener(() =>
+            jkCalendarModel.btnClose.onClick.AddListener(() =>
             {
                 Hide();
             });
         }
-        zCalendarModel.btnLastYear.onClick.AddListener(LastYear);
-        zCalendarModel.btnNextYear.onClick.AddListener(NextYear);
-        zCalendarModel.btnLastMonth.onClick.AddListener(LastMonth);
-        zCalendarModel.btnNextMonth.onClick.AddListener(NextMonth);
+        jkCalendarModel.btnLastYear.onClick.AddListener(LastYear);
+        jkCalendarModel.btnNextYear.onClick.AddListener(NextYear);
+        jkCalendarModel.btnLastMonth.onClick.AddListener(LastMonth);
+        jkCalendarModel.btnNextMonth.onClick.AddListener(NextMonth);
     }
 
     /// <summary>
@@ -86,7 +86,7 @@ public class ZCalendarController
         if (!isInit)
         {
             isInit = true;
-            zCalendar.DateComplete();
+            jkCalendar.DateComplete();
         }
     }
     void LastYear()
@@ -126,13 +126,13 @@ public class ZCalendarController
         UpdateData();
     }
 
-    List<ZCalendarDayItem> dayItemList = new List<ZCalendarDayItem>();
+    List<JKCalendarDayItem> dayItemList = new List<JKCalendarDayItem>();
 
     /// <summary>
     /// 如果是区间日历，选择时间时，需要判断当前日期选择状态
     /// </summary>
     /// <returns></returns>
-    public void ChangeRangeType(ZCalendarDayItem dayItem)
+    public void ChangeRangeType(JKCalendarDayItem dayItem)
     {
         isInRange = !isInRange;
         if (dayItemList.Count >= 2)
@@ -157,7 +157,7 @@ public class ZCalendarController
         }
         if (!isInRange)
         {
-            zCalendar.RangeCalendar(dayItemList[0], dayItemList[1]);
+            jkCalendar.RangeCalendar(dayItemList[0], dayItemList[1]);
         }
     }
     /// <summary>
@@ -168,7 +168,7 @@ public class ZCalendarController
         if (pos != null && !isShow)
         {
             isShow = true;
-            zCalendar.transform.localPosition = pos;
+            jkCalendar.transform.localPosition = pos;
         }
     }
     /// <summary>
@@ -180,7 +180,7 @@ public class ZCalendarController
         {
             isShow = false;
             Debug.Log("hide");
-            zCalendar.transform.localPosition = new Vector3(pos.x, 5000, pos.z);
+            jkCalendar.transform.localPosition = new Vector3(pos.x, 5000, pos.z);
         }
     }
     /// <summary>
@@ -218,7 +218,7 @@ public class ZCalendarController
     /// </summary>
     void UpdateData()
     {
-        zCalendarModel.SetTimeTxt(Year, Month);
+        jkCalendarModel.SetTimeTxt(Year, Month);
         FillLastMonth();
         for (int i = 0; i < days; i++)
         {
@@ -233,7 +233,7 @@ public class ZCalendarController
     {
         monthFirstDay = new DateTime(Year, Month, 1);
         lastMonthEmptyDays = GetLastMonthDays();
-        if (zCalendarModel.autoFillDate)
+        if (jkCalendarModel.autoFillDate)
         {
             for (int i = lastMonthEmptyDays; i > 0; i--)
             {
@@ -244,8 +244,8 @@ public class ZCalendarController
         {
             for (int i = 0; i < lastMonthEmptyDays; i++)
             {
-                ZCalendarDayItem dayItem = zCalendarModel.Instantiate();
-                dayItem.zCalendarController = this;
+                JKCalendarDayItem dayItem = jkCalendarModel.Instantiate();
+                dayItem.jkCalendarController = this;
                 dayItem.CloseClickAble();
             }
         }
@@ -258,7 +258,7 @@ public class ZCalendarController
         int nextMonthDays = 42 - (lastMonthEmptyDays + days);
         if (nextMonthDays != 0)
         {
-            if (zCalendarModel.autoFillDate)
+            if (jkCalendarModel.autoFillDate)
             {
                 DateTime lastDay = monthFirstDay.AddDays(days);
                 for (int i = 0; i < nextMonthDays; i++)
@@ -273,10 +273,10 @@ public class ZCalendarController
     /// </summary>
     void AddDayItem(DateTime dateTime)
     {
-        ZCalendarDayItem dayItem = zCalendarModel.Instantiate();
-        dayItem.zCalendarController = this;
+        JKCalendarDayItem dayItem = jkCalendarModel.Instantiate();
+        dayItem.jkCalendarController = this;
         dayItem.Init(dateTime, Day);
-        zCalendar.UpdateDate(dayItem);
+        jkCalendar.UpdateDate(dayItem);
         if (!isInRange && dayItemList.Count > 0)
         {
             dayItem.IsRangeDayItem(dayItemList[0], dayItemList[1]);
@@ -297,10 +297,10 @@ public class ZCalendarController
     void DestroyAllChildren()
     {
         List<Transform> lst = new List<Transform>();
-        int count = zCalendarModel.dayContent.childCount;
+        int count = jkCalendarModel.dayContent.childCount;
         for (int i = 0; i < count; i++)
         {
-            Transform child = zCalendarModel.dayContent.GetChild(i);
+            Transform child = jkCalendarModel.dayContent.GetChild(i);
             lst.Add(child);
         }
         for (int i = 0; i < lst.Count; i++)
