@@ -39,7 +39,7 @@ public class ZCalendarDayItem : MonoBehaviour, IPointerEnterHandler, IPointerExi
                     {
                         zCalendarController.ChangeRangeType(this);
                     }
-                    if (zCalendarController.zCalendarModel.isPopupCalendar)
+                    if (zCalendarController.zCalendarModel.isPopupCalendar && zCalendarController.isInit)
                     {
                         zCalendarController.Hide();
                     }

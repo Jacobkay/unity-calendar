@@ -30,7 +30,7 @@ public class ZCalendarController
     public DateTime nowTime = DateTime.Now;
     private int lastMonthEmptyDays;
     bool isShow = true;
-    bool isInit = false;
+    public bool isInit = false;
     /// <summary>
     /// ±£´æÎÄ×ÖÑÕÉ«
     /// </summary>
