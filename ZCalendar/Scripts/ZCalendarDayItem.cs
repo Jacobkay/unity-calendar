@@ -238,6 +238,11 @@ namespace ZCalendar
             lunarTxt.text = (day == 1) ? GetLunarMonth(month) : GetLunarDay(day);
             //Debug.Log($"{year}-{(month.ToString().Length == 1 ? "0" + month : month + "")}-{(day.ToString().Length == 1 ? "0" + day : day + "")}");
         }
+        /// <summary>
+        /// 获取农历月
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns></returns>
         string GetLunarMonth(int month)
         {
             if (month < 13 && month > 0)
@@ -247,7 +252,11 @@ namespace ZCalendar
 
             throw new ArgumentOutOfRangeException("无效的月份!");
         }
-
+        /// <summary>
+        /// 获取农历年
+        /// </summary>
+        /// <param name="day"></param>
+        /// <returns></returns>
         string GetLunarDay(int day)
         {
             if (day > 0 && day < 32)
