@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 using System;
 using System.Text;
 
-public class JKCalendarDayItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ZCalendarDayItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public GameObject imgBk;
     public GameObject rangeBk;
@@ -14,7 +14,7 @@ public class JKCalendarDayItem : MonoBehaviour, IPointerEnterHandler, IPointerEx
     public Button btn;
     public Text lunarTxt;
     [HideInInspector]
-    public JKCalendarController jkCalendarController;
+    public ZCalendarController zCalendarController;
     private bool isCanClick = true;
     public int Year { get; set; }
     public int Month { get; set; }
@@ -31,17 +31,17 @@ public class JKCalendarDayItem : MonoBehaviour, IPointerEnterHandler, IPointerEx
                 imgBk?.SetActive(value);
                 if (value)
                 {
-                    if (!jkCalendarController.IsInRange)
+                    if (!zCalendarController.IsInRange)
                     {
-                        jkCalendarController.jkCalendar.DayClick(this);
+                        zCalendarController.zCalendar.DayClick(this);
                     }
-                    if (jkCalendarController.jkCalendarModel.rangeCalendar)
+                    if (zCalendarController.zCalendarModel.rangeCalendar)
                     {
-                        jkCalendarController.ChangeRangeType(this);
+                        zCalendarController.ChangeRangeType(this);
                     }
-                    if (jkCalendarController.jkCalendarModel.isPopupCalendar)
+                    if (zCalendarController.zCalendarModel.isPopupCalendar)
                     {
-                        jkCalendarController.Hide();
+                        zCalendarController.Hide();
                     }
                 }
             }
@@ -92,31 +92,31 @@ public class JKCalendarDayItem : MonoBehaviour, IPointerEnterHandler, IPointerEx
         this.Month = dateTime.Month;
         this.Day = dateTime.Day;
         txt.text = Day.ToString("00");
-        if (!jkCalendarController.jkCalendarModel.rangeCalendar)
+        if (!zCalendarController.zCalendarModel.rangeCalendar)
         {
             IsOn = Day == crtDay;
         }
         else
         {
-            jkCalendarController.jkCalendar.RangeTimeEvent += RangeTimeEvent;
+            zCalendarController.zCalendar.RangeTimeEvent += RangeTimeEvent;
         }
-        isCanClick = !jkCalendarController.jkCalendarModel.isStaticCalendar;
-        greyColor = jkCalendarController.greyColor.a == 0 ? new Color(txt.color.r, txt.color.g, txt.color.b, 0.1f) : jkCalendarController.greyColor;
-        if (!jkCalendarController.jkCalendarModel.isStaticCalendar)
+        isCanClick = !zCalendarController.zCalendarModel.isStaticCalendar;
+        greyColor = zCalendarController.greyColor.a == 0 ? new Color(txt.color.r, txt.color.g, txt.color.b, 0.1f) : zCalendarController.greyColor;
+        if (!zCalendarController.zCalendarModel.isStaticCalendar)
         {
             btn.onClick.AddListener(() =>
             {
                 IsOn = true;
             });
-            jkCalendarController.jkCalendar.ChoiceDayEvent += ChangeState;
+            zCalendarController.zCalendar.ChoiceDayEvent += ChangeState;
         }
-        if (!jkCalendarController.jkCalendarModel.isUnexpiredTimeCanClick)
-            IsUnexpiredTime(jkCalendarController.nowTime, dateTime);
-        if (jkCalendarController.jkCalendarModel.autoFillDate)
+        if (!zCalendarController.zCalendarModel.isUnexpiredTimeCanClick)
+            IsUnexpiredTime(zCalendarController.nowTime, dateTime);
+        if (zCalendarController.zCalendarModel.autoFillDate)
         {
-            IsCrtMonth(jkCalendarController.Month);
+            IsCrtMonth(zCalendarController.Month);
         }
-        if (jkCalendarController.jkCalendarModel.lunar)
+        if (zCalendarController.zCalendarModel.lunar)
         {
             lunarTxt.gameObject.SetActive(true);
             SolarToLunar(dateTime);
@@ -138,7 +138,7 @@ public class JKCalendarDayItem : MonoBehaviour, IPointerEnterHandler, IPointerEx
     /// <summary>
      /// 判断是否在选择区间内的时间
      /// </summary>
-    public void IsRangeDayItem(JKCalendarDayItem d1, JKCalendarDayItem d2)
+    public void IsRangeDayItem(ZCalendarDayItem d1, ZCalendarDayItem d2)
     {
         RangeTimeEvent(d1, d2);
         if (DateTime.Compare(d1.dateTime, dateTime) == 0 || DateTime.Compare(d2.dateTime, dateTime) == 0)
@@ -151,7 +151,7 @@ public class JKCalendarDayItem : MonoBehaviour, IPointerEnterHandler, IPointerEx
     /// </summary>
     /// <param name="d1"></param>
     /// <param name="d2"></param>
-    void RangeTimeEvent(JKCalendarDayItem d1, JKCalendarDayItem d2)
+    void RangeTimeEvent(ZCalendarDayItem d1, ZCalendarDayItem d2)
     {
         if (DateTime.Compare(d1.dateTime, dateTime) < 0 && DateTime.Compare(d2.dateTime, dateTime) > 0)
         {
@@ -161,7 +161,7 @@ public class JKCalendarDayItem : MonoBehaviour, IPointerEnterHandler, IPointerEx
     /// <summary>
     /// 改变当前状态
     /// </summary>
-    void ChangeState(JKCalendarDayItem dayItem)
+    void ChangeState(ZCalendarDayItem dayItem)
     {
         if (dayItem != this)
         {
@@ -218,9 +218,9 @@ public class JKCalendarDayItem : MonoBehaviour, IPointerEnterHandler, IPointerEx
     /// <param name="time"></param>
     void SolarToLunar(DateTime dt)
     {
-        int year = jkCalendarController.cncld.GetYear(dt);
-        int flag = jkCalendarController.cncld.GetLeapMonth(year);
-        int month = jkCalendarController.cncld.GetMonth(dt);
+        int year = zCalendarController.cncld.GetYear(dt);
+        int flag = zCalendarController.cncld.GetLeapMonth(year);
+        int month = zCalendarController.cncld.GetMonth(dt);
         if (flag > 0)
         {
             if (flag == month)
@@ -233,7 +233,7 @@ public class JKCalendarDayItem : MonoBehaviour, IPointerEnterHandler, IPointerEx
                 month--;
             }
         }
-        int day = jkCalendarController.cncld.GetDayOfMonth(dt);
+        int day = zCalendarController.cncld.GetDayOfMonth(dt);
         lunarTxt.text = (day == 1) ? GetLunarMonth(month) : GetLunarDay(day);
         //Debug.Log($"{year}-{(month.ToString().Length == 1 ? "0" + month : month + "")}-{(day.ToString().Length == 1 ? "0" + day : day + "")}");
     }
@@ -241,7 +241,7 @@ public class JKCalendarDayItem : MonoBehaviour, IPointerEnterHandler, IPointerEx
     {
         if (month < 13 && month > 0)
         {
-            return $"{jkCalendarController.lunarMonths[month - 1]}月";
+            return $"{zCalendarController.lunarMonths[month - 1]}月";
         }
 
         throw new ArgumentOutOfRangeException("无效的月份!");
@@ -253,21 +253,21 @@ public class JKCalendarDayItem : MonoBehaviour, IPointerEnterHandler, IPointerEx
         {
             if (day != 20 && day != 30)
             {
-                return string.Concat(jkCalendarController.lunarDaysT[(day - 1) / 10], jkCalendarController.lunarDays[(day - 1) % 10]);
+                return string.Concat(zCalendarController.lunarDaysT[(day - 1) / 10], zCalendarController.lunarDays[(day - 1) % 10]);
             }
             else
             {
-                return string.Concat(jkCalendarController.lunarDays[(day - 1) / 10], jkCalendarController.lunarDaysT[1]);
+                return string.Concat(zCalendarController.lunarDays[(day - 1) / 10], zCalendarController.lunarDaysT[1]);
             }
         }
         throw new ArgumentOutOfRangeException("无效的日!");
     }
     private void OnDestroy()
     {
-        if (!jkCalendarController.jkCalendarModel.isStaticCalendar)
+        if (!zCalendarController.zCalendarModel.isStaticCalendar)
         {
-            jkCalendarController.jkCalendar.ChoiceDayEvent -= ChangeState;
+            zCalendarController.zCalendar.ChoiceDayEvent -= ChangeState;
         }
-        jkCalendarController.jkCalendar.RangeTimeEvent -= RangeTimeEvent;
+        zCalendarController.zCalendar.RangeTimeEvent -= RangeTimeEvent;
     }
 }

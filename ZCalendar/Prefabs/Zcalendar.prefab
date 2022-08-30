@@ -1052,7 +1052,7 @@ GameObject:
   - component: {fileID: 1665065198159816944}
   - component: {fileID: 2088255480904189125}
   m_Layer: 5
-  m_Name: JKcalendar
+  m_Name: Zcalendar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1097,7 +1097,6 @@ MonoBehaviour:
   isPopupCalendar: 1
   isStaticCalendar: 0
   autoSetItemSize: 1
-  rangeCalendar: 0
   bak: {fileID: 2361311450950474763}
   btnLastYear: {fileID: 5262357776820215442}
   btnNextYear: {fileID: 8510878243656539100}

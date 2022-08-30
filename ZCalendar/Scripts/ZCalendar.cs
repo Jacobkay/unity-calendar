@@ -2,21 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[RequireComponent(typeof(JKCalendarModel))]
-public class JKCalendar : MonoBehaviour
+[RequireComponent(typeof(ZCalendarModel))]
+public class ZCalendar : MonoBehaviour
 {
     /// <summary>
     /// 数据更新时，可获取到每一个日期，并对其进行操作
     /// </summary>
-    public event Action<JKCalendarDayItem> UpdateDateEvent;
+    public event Action<ZCalendarDayItem> UpdateDateEvent;
     /// <summary>
     /// 可以获取到点击的某一天
     /// </summary>
-    public event Action<JKCalendarDayItem> ChoiceDayEvent;
+    public event Action<ZCalendarDayItem> ChoiceDayEvent;
     /// <summary>
     /// 选择区间时间事件
     /// </summary>
-    public event Action<JKCalendarDayItem, JKCalendarDayItem> RangeTimeEvent;
+    public event Action<ZCalendarDayItem, ZCalendarDayItem> RangeTimeEvent;
     /// <summary>
     /// 日历加载结束
     /// </summary>
@@ -24,30 +24,30 @@ public class JKCalendar : MonoBehaviour
     /// <summary>
     /// 获取当前选中的天对象
     /// </summary>
-    public JKCalendarDayItem CrtTime { get; set; }
+    public ZCalendarDayItem CrtTime { get; set; }
     /// <summary>
     /// model
     /// </summary>
-    private JKCalendarModel JKCalendarModel;
+    private ZCalendarModel zCalendarModel;
     /// <summary>
     /// controller
     /// </summary>
-    private JKCalendarController JKCalendarController;
+    private ZCalendarController zCalendarController;
     /// <summary>
     /// 入口
     /// </summary>
     private void Start()
     {
-        JKCalendarModel = this.GetComponent<JKCalendarModel>();
-        JKCalendarController = new JKCalendarController()
+        zCalendarModel = this.GetComponent<ZCalendarModel>();
+        zCalendarController = new ZCalendarController()
         {
-            jkCalendar = this,
-            jkCalendarModel = JKCalendarModel,
+            zCalendar = this,
+            zCalendarModel = zCalendarModel,
             pos = this.transform.localPosition
         };
-        JKCalendarController.Init();
+        zCalendarController.Init();
         // 开启时自动初始化
-        if (JKCalendarModel.awake2Init)
+        if (zCalendarModel.awake2Init)
         {
             Init();
         }
@@ -57,14 +57,14 @@ public class JKCalendar : MonoBehaviour
     /// </summary>
     public void Init()
     {
-        JKCalendarController.InitDate(DateTime.Now);
+        zCalendarController.InitDate(DateTime.Now);
     }
     /// <summary>
     /// 按照DateTime格式初始化日历
     /// </summary>
     public void Init(DateTime dateTime)
     {
-        JKCalendarController.InitDate(dateTime);
+        zCalendarController.InitDate(dateTime);
     }
     /// <summary>
     /// 按照YYYY-MM-DD格式初始化日历
@@ -72,14 +72,14 @@ public class JKCalendar : MonoBehaviour
     public void Init(string dateTime)
     {
         string[] dateTimes = dateTime.Split('-');
-        JKCalendarController.InitDate(new DateTime(int.Parse(dateTimes[0]), int.Parse(dateTimes[1]), int.Parse(dateTimes[2])));
+        zCalendarController.InitDate(new DateTime(int.Parse(dateTimes[0]), int.Parse(dateTimes[1]), int.Parse(dateTimes[2])));
     }
 
     /// <summary>
     /// 切换时间
     /// </summary>
     /// <param name="obj"></param>
-    public void UpdateDate(JKCalendarDayItem obj)
+    public void UpdateDate(ZCalendarDayItem obj)
     {
         if (null != UpdateDateEvent)
         {
@@ -89,7 +89,7 @@ public class JKCalendar : MonoBehaviour
     /// <summary>
     /// 日期点击
     /// </summary>
-    public void DayClick(JKCalendarDayItem dayItem)
+    public void DayClick(ZCalendarDayItem dayItem)
     {
         if (null != ChoiceDayEvent)
         {
@@ -112,7 +112,7 @@ public class JKCalendar : MonoBehaviour
     /// </summary>
     /// <param name="firstDay"></param>
     /// <param name="secondDay"></param>
-    public void RangeCalendar(JKCalendarDayItem firstDay, JKCalendarDayItem secondDay )
+    public void RangeCalendar(ZCalendarDayItem firstDay, ZCalendarDayItem secondDay )
     {
         if (null != RangeTimeEvent)
         {
@@ -124,18 +124,18 @@ public class JKCalendar : MonoBehaviour
     /// </summary>
     public void Show()
     {
-        JKCalendarController.Show();
+        zCalendarController.Show();
     }
     /// <summary>
     /// 隐藏弹窗
     /// </summary>
     public void Hide()
     {
-        JKCalendarController.Hide();
+        zCalendarController.Hide();
     }
     private void OnDestroy()
     {
-        JKCalendarController = null;
+        zCalendarController = null;
         GC.Collect();
     }
 }
