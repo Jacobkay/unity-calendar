@@ -61,4 +61,11 @@ public class ZCalendarDemo : MonoBehaviour
     {
         Debug.Log($"º”‘ÿ»’∆⁄£∫{obj.Day}");
     }
+    private void OnDestroy()
+    {
+        zCalendar.UpdateDateEvent -= ZCalendar_UpdateDateEvent;
+        zCalendar.ChoiceDayEvent -= ZCalendar_ChoiceDayEvent;
+        zCalendar.RangeTimeEvent -= ZCalendar_RangeTimeEvent;
+        zCalendar.CompleteEvent -= ZCalendar_CompleteEvent;
+    }
 }
