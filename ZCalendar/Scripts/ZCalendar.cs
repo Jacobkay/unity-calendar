@@ -76,51 +76,6 @@ namespace ZTools
             string[] dateTimes = dateTime.Split('-');
             zCalendarController.InitDate(new DateTime(int.Parse(dateTimes[0]), int.Parse(dateTimes[1]), int.Parse(dateTimes[2])));
         }
-
-        /// <summary>
-        /// 切换时间
-        /// </summary>
-        /// <param name="obj"></param>
-        public void UpdateDate(ZCalendarDayItem obj)
-        {
-            if (null != UpdateDateEvent)
-            {
-                UpdateDateEvent.Invoke(obj);
-            }
-        }
-        /// <summary>
-        /// 日期点击
-        /// </summary>
-        public void DayClick(ZCalendarDayItem dayItem)
-        {
-            if (null != ChoiceDayEvent)
-            {
-                ChoiceDayEvent.Invoke(dayItem);
-            }
-            CrtTime = dayItem;
-        }
-        /// <summary>
-        /// 加载结束
-        /// </summary>
-        public void DateComplete()
-        {
-            if (null != CompleteEvent)
-            {
-                CompleteEvent.Invoke();
-            }
-        }
-        /// <summary>
-        /// 区间日期选择
-        /// </summary>
-        /// <param name="firstDay"></param>
-        /// <param name="secondDay"></param>
-        public void RangeCalendar(ZCalendarDayItem firstDay, ZCalendarDayItem secondDay )
-        {
-            if (null != RangeTimeEvent)
-            {
-                RangeTimeEvent.Invoke(firstDay, secondDay);
-            }
-        }
         /// <summary>
         /// 显示弹窗
         /// </summary>
@@ -134,6 +89,55 @@ namespace ZTools
         public void Hide()
         {
             zCalendarController.Hide();
+        }
+
+        /// <summary>
+        /// 切换时间
+        /// </summary>
+        /// <param name="obj"></param>
+        [Obsolete("事件触发器，请使用UpdateDateEvent获取切换月份时加载的时间对象")]
+        public void UpdateDate(ZCalendarDayItem obj)
+        {
+            if (null != UpdateDateEvent)
+            {
+                UpdateDateEvent.Invoke(obj);
+            }
+        }
+        /// <summary>
+        /// 日期点击
+        /// </summary>
+        [Obsolete("事件触发器，请使用ChoiceDayEvent获取当前选择的时间")]
+        public void DayClick(ZCalendarDayItem dayItem)
+        {
+            if (null != ChoiceDayEvent)
+            {
+                ChoiceDayEvent.Invoke(dayItem);
+            }
+            CrtTime = dayItem;
+        }
+        /// <summary>
+        /// 加载结束
+        /// </summary>
+        [Obsolete("事件触发器，请使用CompleteEvent获取日历加载完成事件")]
+        public void DateComplete()
+        {
+            if (null != CompleteEvent)
+            {
+                CompleteEvent.Invoke();
+            }
+        }
+        /// <summary>
+        /// 区间日期选择
+        /// </summary>
+        /// <param name="firstDay"></param>
+        /// <param name="secondDay"></param>
+        [Obsolete("事件触发器，请使用RangeTimeEvent获取区间时间")]
+        public void RangeCalendar(ZCalendarDayItem firstDay, ZCalendarDayItem secondDay )
+        {
+            if (null != RangeTimeEvent)
+            {
+                RangeTimeEvent.Invoke(firstDay, secondDay);
+            }
         }
         private void OnDestroy()
         {

@@ -21,6 +21,8 @@ public class ZCalendarDemo : MonoBehaviour
         //zCalendar.Init();
         //zCalendar.Init(System.DateTime.Now);
         //zCalendar.Init("2022-02-02");
+        //zCalendar.Show();
+        //zCalendar.Hide();
     }
     /// <summary>
     /// º”‘ÿΩ· ¯
