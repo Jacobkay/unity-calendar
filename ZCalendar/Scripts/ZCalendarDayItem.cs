@@ -82,7 +82,7 @@ namespace ZTools
         /// <param name="day">日</param>
         /// <param name="nowTime"></param>
         /// <param name="crtDay">当前天</param>
-        public void Init(DateTime dateTime, int crtDay)
+        public void Init(DateTime dateTime, DateTime crtDay)
         {
             isRange = rangeBk.activeInHierarchy;
             isOn = imgBk.activeInHierarchy;
@@ -93,9 +93,10 @@ namespace ZTools
             this.Month = dateTime.Month;
             this.Day = dateTime.Day;
             txt.text = Day.ToString("00");
+
             if (!zCalendarController.zCalendarModel.rangeCalendar)
             {
-                IsOn = Day == crtDay;
+                IsOn = (DateTime.Compare(dateTime, crtDay) == 0);
             }
             else
             {

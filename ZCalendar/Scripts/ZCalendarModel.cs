@@ -16,7 +16,7 @@ namespace ZTools
         public bool isUnexpiredTimeCanClick = true;
         [Header("显示农历日期")]
         public bool lunar = true;
-        [Header("如果为true，本对象显示状态不能关闭，可关闭bak")]
+        [Header("如果为true，本对象显示状态不能关闭，可通过子集bak的显示状态控制默认状态")]
         [Header("当前是否为弹窗日历")]
         public bool isPopupCalendar = false;
         [Header("当前是否为静态日历")]

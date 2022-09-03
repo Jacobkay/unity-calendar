@@ -28,7 +28,7 @@ namespace ZTools
         private int nextMonthDays;
         public ZCalendar zCalendar;
         public ZCalendarModel zCalendarModel;
-        public DateTime nowTime = DateTime.Now;
+        public DateTime nowTime = DateTime.Today;
         private int lastMonthEmptyDays;
         bool isShow = true;
         public bool isInit = false;
@@ -276,7 +276,7 @@ namespace ZTools
         {
             ZCalendarDayItem dayItem = zCalendarModel.Instantiate();
             dayItem.zCalendarController = this;
-            dayItem.Init(dateTime, Day);
+            dayItem.Init(dateTime, nowTime);
             zCalendar.UpdateDate(dayItem);
             if (!isInRange && dayItemList.Count > 0)
             {
