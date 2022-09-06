@@ -22,6 +22,7 @@
 1.  下载拖入工程中
 2.  将Prefabs/Zcalendar预制体拖入到canvas下
 3.  Inspector面板中即可看到所有显示配置项
+4.	点击运行即可使用
 
 #### 使用说明
 config：
